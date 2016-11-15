@@ -28,6 +28,7 @@ export class FlashMessagesComponent implements OnInit {
     constructor(private _flashMessagesService: FlashMessagesService) {
         this._flashMessagesService.show = this.show.bind(this);
         this._flashMessagesService.grayOut = this.grayOut.bind(this);
+        this._flashMessagesService.messages = this.messages;
     }
 
     ngOnInit() {
