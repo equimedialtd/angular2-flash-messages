@@ -9,8 +9,8 @@ import { FlashMessageInterface } from './flash-message.interface';
       <div id="flashMessages" class="flash-messages {{classes}}">
           <div id="grayOutDiv" *ngIf='_grayOut && messages.length'></div>
           <div class="alert flash-message {{message.cssClass}}" *ngFor='let message of messages'>
-              <p>{{message.text}}</p>
-          </div> 
+              <div [innerHTML]="message.text"></div>
+          </div>
       </div>
   `
 })
@@ -34,24 +34,26 @@ export class FlashMessagesComponent implements OnInit {
     ngOnInit() {
         this._flashMessagesElement = document.getElementById('flashMessages');
     }
-    
+
     show(text?: string, options = {}): void {
-        
+
         let defaults = {
           timeout: 2500,
           cssClass: ''
         };
-        
+
         for (var attrname in options) { defaults[attrname] = options[attrname]; }
-        
+
         let message = new FlashMessage(text, defaults.cssClass);
         this.messages.push(message);
-        
-        window.setTimeout(() => {
-            this._remove(message);
-        }, defaults.timeout);
+
+        if(defaults.timeout > 0) {
+          window.setTimeout(() => {
+              this._remove(message);
+          }, defaults.timeout);
+        }
     }
-    
+
     grayOut(value = false) {
         this._grayOut = value;
     }
