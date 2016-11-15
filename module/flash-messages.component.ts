@@ -30,16 +30,21 @@ export class FlashMessagesComponent implements OnInit {
         this._flashMessagesService.show = this.show.bind(this);
         this._flashMessagesService.grayOut = this.grayOut.bind(this);
         this._flashMessagesService.messages = this.messages;
+        this._flashMessagesService.add = this.addFlash.bind(this);
         this._flashMessagesService.remove = this.removeFlash.bind(this);
+        this._flashMessagesService.clear = this.clearFlash.bind(this);
     }
 
     ngOnInit() {
       this._flashMessagesElement = document.getElementById('flashMessages');
     }
 
+    clearFlash() { this.messages = []; }
+
     addFlash(message:FlashMessageInterface) {
       // this.show(flash.text, { cssClass: flash.cssClass })
       this.messages.push(message);
+      return this.messages;
     }
 
     show(text?: string, options = {}): void {
@@ -64,9 +69,11 @@ export class FlashMessagesComponent implements OnInit {
         this._grayOut = value;
     }
 
+    findFlash(message: FlashMessageInterface) {
+    	return this.messages.indexOf(message);
+    }
+
     removeFlash(message: FlashMessageInterface) {
-        this.messages = this.messages.filter(function(msg) {
-          return msg.text !== message.text;
-        });
+  		this.messages.splice( this.findFlash(message), 1 )
     }
 }
