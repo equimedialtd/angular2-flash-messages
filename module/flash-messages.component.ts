@@ -8,7 +8,7 @@ import { FlashMessageInterface } from './flash-message.interface';
   template: `
       <div id="flashMessages" class="flash-messages {{classes}}">
           <div id="grayOutDiv" *ngIf='_grayOut && messages.length'></div>
-          <div class="flash-message {{message.cssClass}}" *ngFor='let message of messages' [innerHTML]="message.text">
+          <div *ngFor='let message of messages' class="flash-message {{message.cssClass}}" [innerHTML]="message.text">
           </div>
       </div>
   `
@@ -34,6 +34,11 @@ export class FlashMessagesComponent implements OnInit {
         this._flashMessagesElement = document.getElementById('flashMessages');
     }
 
+    addFlash(message:FlashMessageInterface) {
+      // this.show(flash.text, { cssClass: flash.cssClass })
+      this.messages.push(message);
+    }
+
     show(text?: string, options = {}): void {
 
         let defaults = {
@@ -44,11 +49,11 @@ export class FlashMessagesComponent implements OnInit {
         for (var attrname in options) { defaults[attrname] = options[attrname]; }
 
         let message = new FlashMessage(text, defaults.cssClass);
-        this.messages.push(message);
+        this.addFlash(message);
 
         if(defaults.timeout > 0) {
           window.setTimeout(() => {
-              this._remove(message);
+              this.removeFlash(message);
           }, defaults.timeout);
         }
     }
@@ -57,7 +62,7 @@ export class FlashMessagesComponent implements OnInit {
         this._grayOut = value;
     }
 
-    private _remove(message: FlashMessageInterface) {
+    removeFlash(message: FlashMessageInterface) {
         this.messages = this.messages.filter(function(msg) {
           return msg.text !== message.text;
         });
