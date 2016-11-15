@@ -6,6 +6,6 @@ import { FlashMessageInterface } from './flash-message.interface';
 export class FlashMessagesService {
     show: (text?: string, options?: Object) => void;
     grayOut: (value: boolean) => void;
+    remove: (flash:FlashMessageInterface) => void;
     messages: FlashMessageInterface[];
-
 }

@@ -13,6 +13,7 @@ import { FlashMessageInterface } from './flash-message.interface';
       </div>
   `
 })
+
 export class FlashMessagesComponent implements OnInit {
     private _defaults = {
         text: 'default message',
@@ -29,10 +30,11 @@ export class FlashMessagesComponent implements OnInit {
         this._flashMessagesService.show = this.show.bind(this);
         this._flashMessagesService.grayOut = this.grayOut.bind(this);
         this._flashMessagesService.messages = this.messages;
+        this._flashMessagesService.remove = this.removeFlash.bind(this);
     }
 
     ngOnInit() {
-        this._flashMessagesElement = document.getElementById('flashMessages');
+      this._flashMessagesElement = document.getElementById('flashMessages');
     }
 
     addFlash(message:FlashMessageInterface) {
@@ -41,7 +43,6 @@ export class FlashMessagesComponent implements OnInit {
     }
 
     show(text?: string, options = {}): void {
-
         let defaults = {
           timeout: 2500,
           cssClass: ''
