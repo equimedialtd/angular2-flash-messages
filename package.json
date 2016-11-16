@@ -8,7 +8,7 @@
     "lite": "lite-server",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "install": "tsc -p ./tsconfig.publish.json"
+    "install": "typings install && tsc -p ./tsconfig.publish.json"
   },
   "keywords": [
     "angular2",
