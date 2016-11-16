@@ -1,4 +1,4 @@
 export interface FlashMessageInterface {
-    text: string;
-    cssClass: string;
+  text: string;
+  cssClass: string;
 }
