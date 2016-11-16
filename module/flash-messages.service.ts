@@ -5,7 +5,7 @@ import { FlashMessageInterface } from './flash-message.interface';
 
 @Injectable()
 export class FlashMessagesService {
-	private messages: FlashMessageInterface[] = [];
+	public messages: FlashMessageInterface[] = [];
 	private overlay: boolean = false;
 
 	clear(): void { this.messages = []; }
@@ -24,7 +24,7 @@ export class FlashMessagesService {
 	}
 
 	remove(message: FlashMessageInterface): void {
-		this.messages.splice( this.find(message), 1 )
+		this.messages.splice(this.find(message), 1)
 	}
 
 	show(text?: string, args = {}): void {
@@ -36,7 +36,7 @@ export class FlashMessagesService {
 		// (<any>Object).assign(options, args);
 		for (var attr in args) { options[attr] = args[attr]; }
 
-		const message = new FlashMessage(text, { cssClass: options.cssClass });
+		const message = new FlashMessage({ text: text, cssClass: options.cssClass });
 		this.add(message);
 
 		if (options.timeout > 0) {

@@ -4,8 +4,8 @@ import { FlashMessagesService } from './flash-messages.service';
 import { FlashMessageInterface } from './flash-message.interface';
 
 @Component({
-  selector: 'flash-messages',
-  template: `
+	selector: 'flash-messages',
+	template: `
     <div id="flashMessages" class="flash-message-container {{classes}}">
       <div id="greyOut" *ngIf='_grayOut && flashService.messages.length'></div>
       <div *ngFor='let message of flashService.messages' class="flash-message {{message.cssClass}}" [innerHTML]="message.text">
