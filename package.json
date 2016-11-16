@@ -1,67 +1,14 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "https://github.com/equimedialtd/angular2-flash-messages/tarball/master",
-        "scope": null,
-        "escapedName": null,
-        "name": null,
-        "rawSpec": "https://github.com/equimedialtd/angular2-flash-messages/tarball/master",
-        "spec": "https://github.com/equimedialtd/angular2-flash-messages/tarball/master",
-        "type": "remote"
-      },
-      "W:\\csh-funnel"
-    ]
-  ],
-  "_from": "https://github.com/equimedialtd/angular2-flash-messages/tarball/master",
-  "_id": "angular2-flash-messages@1.0.7",
-  "_inCache": true,
-  "_location": "/angular2-flash-messages",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "https://github.com/equimedialtd/angular2-flash-messages/tarball/master",
-    "scope": null,
-    "escapedName": null,
-    "name": null,
-    "rawSpec": "https://github.com/equimedialtd/angular2-flash-messages/tarball/master",
-    "spec": "https://github.com/equimedialtd/angular2-flash-messages/tarball/master",
-    "type": "remote"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://github.com/equimedialtd/angular2-flash-messages/tarball/master",
-  "_shasum": "8b2ae322cd9dbd34ac584fcbace1798b15fce646",
-  "_shrinkwrap": null,
-  "_spec": "https://github.com/equimedialtd/angular2-flash-messages/tarball/master",
-  "_where": "W:\\csh-funnel",
-  "author": {
-    "name": "Paul Moff"
-  },
-  "dependencies": {},
+  "name": "angular2-flash-messages",
+  "version": "1.1.0",
   "description": "Angular 2 flash messages module",
-  "devDependencies": {
-    "@angular/common": "~2.1.0",
-    "@angular/compiler": "~2.1.0",
-    "@angular/core": "~2.1.0",
-    "@angular/forms": "~2.1.0",
-    "@angular/http": "~2.1.0",
-    "@angular/platform-browser": "~2.1.0",
-    "@angular/platform-browser-dynamic": "~2.1.0",
-    "@angular/router": "~3.1.0",
-    "@angular/upgrade": "~2.1.0",
-    "angular-in-memory-web-api": "~0.1.5",
-    "bootstrap": "^3.3.6",
-    "concurrently": "^3.0.0",
-    "core-js": "^2.4.1",
-    "lite-server": "^2.2.2",
-    "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-beta.12",
-    "systemjs": "0.19.39",
-    "typescript": "^2.0.3",
-    "typings": "^1.4.0",
-    "zone.js": "^0.6.25"
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "lite": "lite-server",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "prepublish": "tsc -p ./tsconfig.publish.json"
   },
   "keywords": [
     "angular2",
@@ -72,22 +19,32 @@
     "flash",
     "messages"
   ],
+  "author": "Paul Moff",
   "license": "MIT",
-  "main": "index.js",
-  "name": "angular2-flash-messages",
-  "optionalDependencies": {},
   "peerDependencies": {
     "@angular/core": "^2.0.0",
     "@angular/common": "^2.0.0"
   },
-  "readme": "# Angular 2 flash messages module\n\n[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](http://opensource.org/licenses/MIT)\n\nThis is a simple module that provides component and service for showing flash messages.\n\n## Requirements\n- [NPM](https://npmjs.org/) - Node package manager\n\n\n## Installation\n\n- run `npm install angular2-flash-messages --save`\n- import `FlashMessagesModule` in your app's main module `app.module.ts`, e.g.:\n\n```\n// other imports\n// ...\nimport { FlashMessagesModule } from 'angular2-flash-messages';\n// ...\n\n@NgModule({\n    imports: [\n        // other imports\n        // ...\n        FlashMessagesModule,\n        // ...\n    ]\n})\n\n```\n\nThat should be enough if you use Webpack to bundle JavaScript.\n\nOtherwise you'll have to edit `systemjs.config.js` to set correct path, e.g.:\n\n```\n// below you can see an example of map and packages sections in systemjs.config.js\n\n// ...\n// map tells the System loader where to look for things\nvar map = {\n    // ...\n    'angular2-flash-messages':    'node_modules/angular2-flash-messages'\n    // ...\n};\n// packages tells the System loader how to load when no filename and/or no extension\nvar packages = {\n    // ...\n    'angular2-flash-messages':    { main: 'index.js', defaultExtension: 'js' }\n    // ...\n};\n\n// ...\n```\n\n## Usage\n\nPlace flash messages component selector in a template, for example in `AppComponent`:\n\n```\nimport { Component } from \"@angular/core\";\n\n@Component({\n    selector: 'my-app',\n    template: `\n        <flash-messages></flash-messages>\n        <router-outlet></router-outlet>\n    `\n})\nexport class AppComponent {}\n```\n\nImport FlashMessagesService and show flash message in any component, e.g.:\n\n```\nimport { Component, OnInit } from '@angular/core';\nimport { FlashMessagesService } from 'angular2-flash-messages';\n\n@Component({\n    template: `\n        <p>About Component</p>\n    `\n})\nexport class AboutComponent implements OnInit {\n    constructor(private _flashMessagesService: FlashMessagesService) {}\n    \n    ngOnInit() {\n        // 1st parameter is a flash message text\n        // 2nd parameter is optional. You can pass object with options.\n        this._flashMessagesService.show('We are in about component!', { cssClass: 'alert-success', timeout: 1000 });\n    }\n}\n\n```\n\nBy default flash message is visible for 2.5 seconds and then deleted. You can pass second argument and specify for how long flash message should be visible, e.g.:\n\n```\n// flash message will be visible for 1 second\nthis._flashMessagesService.show('We are in about component!', { timeout: 1000 });\n\n```\n\nYou can specify CSS class for flash message div-element, e.g.:\n\n```\n// set CSS-class for wrapper div of flash message\nthis._flashMessagesService.show('We are in about component!', { cssClass: 'your-css-class' });\n\n```\n\nYou can show multiple flash messages, e.g.:\n\n```\nthis._flashMessagesService.show('Success!', { cssClass: 'alert-success' } );\nthis._flashMessagesService.show('Failure!', { cssClass: 'alert-danger' } );\n\n```\n\nAlso you can gray out everything except your flash messages, e.g.:\n\n```\nthis._flashMessagesService.grayOut(true); // turn on gray out feature\nthis._flashMessagesService.grayOut(false); // turn off gray out feature\n\n```\n\nBy default gray out is disabled.\n\nNotice! You have to add some CSS to see gray out in action, e.g.:\n```\n#grayOutDiv\n{\n    background-color: #333;\n    opacity: 0.7;\n    position: fixed;\n    top: 0px;\n    left: 0px;\n    height: 100%;\n    width: 100%;\n    overflow: hidden;\n    z-index: 9999;\n}\n\n.flash-message \n{\n    z-index: 10000;\n    position: relative;\n}\n\n```\n\n## Feedback\n\nPlease [leave your feedback](https://github.com/moff/angular2-flash-messages/issues) if you have noticed any issues or have a feature request.\n\n## License\n\nThe repository code is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).\n",
-  "readmeFilename": "README.md",
-  "scripts": {
-    "lite": "lite-server",
-    "prepublish": "tsc -p ./tsconfig.publish.json",
-    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w"
-  },
-  "version": "1.0.7"
+  "devDependencies": {
+    "@angular/common": "~2.1.0",
+    "@angular/compiler": "~2.1.0",
+    "@angular/core": "~2.1.0",
+    "@angular/forms": "~2.1.0",
+    "@angular/http": "~2.1.0",
+    "@angular/platform-browser": "~2.1.0",
+    "@angular/platform-browser-dynamic": "~2.1.0",
+    "@angular/router": "~3.1.0",
+    "@angular/upgrade": "~2.1.0",
+    "core-js": "^2.4.1",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "5.0.0-beta.12",
+    "systemjs": "0.19.39",
+    "zone.js": "^0.6.25",
+    "angular-in-memory-web-api": "~0.1.5",
+    "concurrently": "^3.0.0",
+    "lite-server": "^2.2.2",
+    "typescript": "^2.0.3",
+    "typings":"^1.4.0",
+    "bootstrap": "^3.3.6"
+  }
 }
